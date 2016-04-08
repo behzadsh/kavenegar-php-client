@@ -7,6 +7,9 @@ use Quince\kavenegar\Exceptions\ClientException;
 class Client
 {
 
+    /**
+     * @const string
+     */
     const API_PATH = "http://api.kavenegar.com/v1/%s/%s/%s.json/";
 
     /**
@@ -44,6 +47,17 @@ class Client
         $this->sender = $sender;
     }
 
+    /**
+     * Send a message to specified receptor phone number
+     *
+     * @param string|string[]      $receptor
+     * @param string               $message
+     * @param int|null             $date
+     * @param int|null             $type
+     * @param string|string[]|null $localId
+     * @param string               $sender
+     * @return \StdClass
+     */
     public function send($receptor, $message, $date = null, $type = null, $localId = null, $sender = null)
     {
         if (is_array($receptor) && is_array($localId) && count($receptor) != count($localId)) {
@@ -62,6 +76,17 @@ class Client
         return $this->run('send', $params);
     }
 
+    /**
+     * Send bulk messages to multiple receptor phone numbers
+     *
+     * @param array                $receptors
+     * @param string|string[]      $message
+     * @param int|null             $date
+     * @param int|int[]|null       $type
+     * @param string|string[]|null $localId
+     * @param string|string[]|null $sender
+     * @return \StdClass
+     */
     public function bulkSend(array $receptors, $message, $date = null, $type = null, $localId = null, $sender = null)
     {
         $receptorCount = count($receptors);
@@ -78,6 +103,12 @@ class Client
         return $this->run('sendarray', $params);
     }
 
+    /**
+     * Get status of a sent message by its message id
+     *
+     * @param string $messageId
+     * @return \StdClass
+     */
     public function getMessageStatus($messageId)
     {
         $params = [
@@ -87,6 +118,12 @@ class Client
         return $this->run('status', $params);
     }
 
+    /**
+     * Get status of a sent message by local id set when sending
+     *
+     * @param string $localId
+     * @return \StdClass
+     */
     public function getMessageStatusByLocalId($localId)
     {
         $params = [
@@ -96,6 +133,12 @@ class Client
         return $this->run('statuslocalmessageid', $params);
     }
 
+    /**
+     * Get details of a message by message id
+     *
+     * @param string $messageId
+     * @return \StdClass
+     */
     public function getMessageDetail($messageId)
     {
         $params = [
@@ -105,6 +148,14 @@ class Client
         return $this->run('select', $params);
     }
 
+    /**
+     * Get all sent message in specified date range (max 3000 message)
+     *
+     * @param int         $startDate
+     * @param int|null    $endDate
+     * @param string|null $sender
+     * @return \StdClass
+     */
     public function getOutbox($startDate, $endDate = null, $sender = null)
     {
         $params = [
@@ -116,6 +167,13 @@ class Client
         return $this->run('selectoutbox', $params);
     }
 
+    /**
+     * Get list of recent sent messages (max 3000 messages)
+     *
+     * @param int         $pageSize
+     * @param string|null $sender
+     * @return \StdClass
+     */
     public function getRecentOutbox($pageSize = 10, $sender = null)
     {
         $params = [
@@ -126,6 +184,14 @@ class Client
         return $this->run('latestoutbox', $params);
     }
 
+    /**
+     * Get count of sent message in specified range
+     *
+     * @param int         $startDate
+     * @param int|null    $endDate
+     * @param string|null $sender
+     * @return \StdClass
+     */
     public function getOutboxCount($startDate, $endDate = null, $sender = null)
     {
         $params = [
@@ -137,6 +203,12 @@ class Client
         return $this->run('countoutbox', $params);
     }
 
+    /**
+     * Canceling a pending message from sending
+     *
+     * @param string $messageId
+     * @return \StdClass
+     */
     public function cancelMessage($messageId)
     {
         $params = [
@@ -146,6 +218,13 @@ class Client
         return $this->run('cancel', $params);
     }
 
+    /**
+     * Get list of received messages (100 messages per each request)
+     *
+     * @param bool        $onlyRead
+     * @param string|null $line
+     * @return \StdClass
+     */
     public function getInbox($onlyRead = false, $line = null)
     {
         $params = [
@@ -156,6 +235,15 @@ class Client
         return $this->run('receive', $params);
     }
 
+    /**
+     * Get count of messages in inbox
+     *
+     * @param int         $startDate
+     * @param int|null    $endDate
+     * @param string|null $line
+     * @param bool        $onlyRead
+     * @return \StdClass
+     */
     public function getInboxCount($startDate, $endDate = null, $line = null, $onlyRead = false)
     {
         $params = [
@@ -168,6 +256,12 @@ class Client
         return $this->run('countinbox', $params);
     }
 
+    /**
+     * Get count of phone numbers in a postal code area, categorized by oprator
+     *
+     * @param string $postalCode
+     * @return \StdClass
+     */
     public function phoneCountByPostalCode($postalCode)
     {
         return $this->run('countpostalcode', [
@@ -175,6 +269,19 @@ class Client
         ]);
     }
 
+    /**
+     * Send message to phone numbers in a postal code area
+     *
+     * @param string      $postalcode
+     * @param string      $message
+     * @param int         $mciStartIndex
+     * @param int         $mciCount
+     * @param int         $mtnStartIndex
+     * @param int         $mtnCount
+     * @param int|null    $date
+     * @param string|null $sender
+     * @return \StdClass
+     */
     public function sendByPostalCode(
         $postalcode,
         $message,
@@ -199,16 +306,42 @@ class Client
         return $this->run('sendbypostalcode', $params);
     }
 
+    /**
+     * Get information of an account
+     *
+     * @return \StdClass
+     */
     public function getAccountInfo()
     {
         return $this->run('info', [], 'account');
     }
 
+    /**
+     * Get or set configuration of an account
+     *
+     * $params['apilogs']          = (string) Status of logging API requests; values: `justfaults` (default), `enabled`, 'disabled`
+     *        ['dailyreport']      = (string) Status of daily report; values: `enabled`, 'disabled`
+     *        ['debugmode']        = (string) Status of debiging/testing mode, when enabled message sending will be mocked; values: `enabled`, 'disabled`
+     *        ['defaultsender']    = (string) The default sender number
+     *        ['mincreditalarm']   = (int)    The limit to alert when the credit is about to finish
+     *        ['resendfailed']     = (string) Whether try to redend when sending failed or not; values: `enabled`, 'disabled`
+     *
+     * @param array $params
+     * @return \StdClass
+     */
     public function getAccountConfigs($params = [])
     {
         return $this->run('config', $params, 'account');
     }
 
+    /**
+     * Send vrification code, password, authorization code, etc...
+     *
+     * @param string $receptor
+     * @param string $token
+     * @param string $template
+     * @return \StdClass
+     */
     public function sendVerificationCode($receptor, $token, $template)
     {
         $params = [
@@ -247,6 +380,12 @@ class Client
         return $this->sender;
     }
 
+    /**
+     * @param string $method
+     * @param array  $params
+     * @param string $base
+     * @return \StdClass
+     */
     protected function run($method, $params = [], $base = 'sms')
     {
         $this->curl->setOpt(CURLOPT_HTTPHEADER, $this->headers);
