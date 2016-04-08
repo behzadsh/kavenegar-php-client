@@ -1,0 +1,21 @@
+{
+    "name": "quince/kavenegar-client",
+    "description": "A php client for connecting to kavenegar.com api for sending sms.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Behzad Shabani",
+            "email": "behzad.shabani@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Quince\\kavenegar\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "curl/curl": "^1.3"
+    }
+}
