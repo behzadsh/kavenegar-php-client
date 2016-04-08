@@ -24,11 +24,6 @@ class Client
      */
     protected $sender;
 
-    /**
-     * @var bool
-     */
-    protected $debug;
-
     protected $headers = [
         'Accept: application/json',
         'Content-Type: application/x-www-form-urlencoded',
@@ -41,14 +36,12 @@ class Client
      * @param Curl   $curl
      * @param string $apiKey
      * @param string $sender
-     * @param bool   $debug
      */
-    public function __construct(Curl $curl, $apiKey, $sender = null, $debug = false)
+    public function __construct(Curl $curl, $apiKey, $sender = null)
     {
         $this->curl = $curl;
         $this->apiKey = $apiKey;
         $this->sender = $sender;
-        $this->debug = $debug;
     }
 
     public function send($receptor, $message, $date = null, $type = null, $localId = null, $sender = null)
