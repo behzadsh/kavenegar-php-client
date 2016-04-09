@@ -48,7 +48,7 @@ class Client
     }
 
     /**
-     * Send a message to specified receptor phone number
+     * Send a message to specified receptor phone number.
      *
      * @param string|string[]      $receptor
      * @param string               $message
@@ -77,9 +77,9 @@ class Client
     }
 
     /**
-     * Send bulk messages to multiple receptor phone numbers
+     * Send bulk messages to multiple receptor phone numbers.
      *
-     * @param array                $receptors
+     * @param string[]             $receptors
      * @param string|string[]      $message
      * @param int|null             $date
      * @param int|int[]|null       $type
@@ -104,7 +104,7 @@ class Client
     }
 
     /**
-     * Get status of a sent message by its message id
+     * Get status of a sent message by its message id.
      *
      * @param string $messageId
      * @return \StdClass
@@ -119,7 +119,7 @@ class Client
     }
 
     /**
-     * Get status of a sent message by local id set when sending
+     * Get status of a sent message by local id set when sending.
      *
      * @param string $localId
      * @return \StdClass
@@ -134,7 +134,7 @@ class Client
     }
 
     /**
-     * Get details of a message by message id
+     * Get details of a message by message id.
      *
      * @param string $messageId
      * @return \StdClass
@@ -149,7 +149,7 @@ class Client
     }
 
     /**
-     * Get all sent message in specified date range (max 3000 message)
+     * Get all sent message in specified date range (max 3000 message).
      *
      * @param int         $startDate
      * @param int|null    $endDate
@@ -168,7 +168,7 @@ class Client
     }
 
     /**
-     * Get list of recent sent messages (max 3000 messages)
+     * Get list of recent sent messages (max 3000 messages).
      *
      * @param int         $pageSize
      * @param string|null $sender
@@ -185,7 +185,7 @@ class Client
     }
 
     /**
-     * Get count of sent message in specified range
+     * Get count of sent message in specified range.
      *
      * @param int         $startDate
      * @param int|null    $endDate
@@ -204,7 +204,7 @@ class Client
     }
 
     /**
-     * Canceling a pending message from sending
+     * Canceling a pending message from sending.
      *
      * @param string $messageId
      * @return \StdClass
@@ -219,7 +219,7 @@ class Client
     }
 
     /**
-     * Get list of received messages (100 messages per each request)
+     * Get list of received messages (100 messages per each request).
      *
      * @param bool        $onlyRead
      * @param string|null $line
@@ -236,7 +236,7 @@ class Client
     }
 
     /**
-     * Get count of messages in inbox
+     * Get count of messages in inbox.
      *
      * @param int         $startDate
      * @param int|null    $endDate
@@ -257,7 +257,7 @@ class Client
     }
 
     /**
-     * Get count of phone numbers in a postal code area, categorized by oprator
+     * Get count of phone numbers in a postal code area, categorized by oprator.
      *
      * @param string $postalCode
      * @return \StdClass
@@ -270,7 +270,7 @@ class Client
     }
 
     /**
-     * Send message to phone numbers in a postal code area
+     * Send message to phone numbers in a postal code area.
      *
      * @param string      $postalcode
      * @param string      $message
@@ -307,7 +307,7 @@ class Client
     }
 
     /**
-     * Get information of an account
+     * Get information of an account.
      *
      * @return \StdClass
      */
@@ -345,7 +345,7 @@ class Client
     }
 
     /**
-     * Send vrification code, password, authorization code, etc...
+     * Send vrification code, password, authorization code, etc.
      *
      * @param string $receptor
      * @param string $token
