@@ -317,21 +317,31 @@ class Client
     }
 
     /**
-     * Get or set configuration of an account
+     * Get configuration of an account.
      *
-     * $params['apilogs']          = (string) Status of logging API requests; values: `justfaults` (default), `enabled`, 'disabled`
-     *        ['dailyreport']      = (string) Status of daily report; values: `enabled`, 'disabled`
-     *        ['debugmode']        = (string) Status of debiging/testing mode, when enabled message sending will be mocked; values: `enabled`, 'disabled`
-     *        ['defaultsender']    = (string) The default sender number
-     *        ['mincreditalarm']   = (int)    The limit to alert when the credit is about to finish
-     *        ['resendfailed']     = (string) Whether try to redend when sending failed or not; values: `enabled`, 'disabled`
-     *
-     * @param array $params
      * @return \StdClass
      */
-    public function getAccountConfigs($params = [])
+    public function getAccountConfigs()
     {
-        return $this->run('config', $params, 'account');
+        return $this->run('config', [], 'account');
+    }
+
+    /**
+     * Set configuration of an account.
+     *
+     * $configs['apilogs']          = (string) Status of logging API requests; values: `justfaults` (default), `enabled`, `disabled`
+     *         ['dailyreport']      = (string) Status of daily report; values: `enabled`, `disabled`
+     *         ['debugmode']        = (string) Status of debiging/testing mode, when enabled message sending will be mocked; values: `enabled`, `disabled`
+     *         ['defaultsender']    = (string) The default sender number
+     *         ['mincreditalarm']   = (int)    The limit to alert when the credit is about to finish
+     *         ['resendfailed']     = (string) Whether try to redend when sending failed or not; values: `enabled`, `disabled`
+     * 
+     * @param array $configs
+     * @return \StdClass
+     */
+    public function setAccountConfigs(array $configs)
+    {
+        return $this->run('config', $configs, 'account');
     }
 
     /**
