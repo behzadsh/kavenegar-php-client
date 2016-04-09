@@ -31,6 +31,53 @@ $client = Quince\kavenegar\ClientBuilder::build($apiKey, $senderNumber);
 $client->send('09123456789', 'سلام چطوری؟');
 ```
 
+## Laravel integration
+
+Laravel 5.1 and above is supported in this package.
+
+Add the following line to your laravel `config/app.php`:
+
+```
+'providers' => [
+    //...
+
+    Quince\kavenegar\Providers\ServiceProvider::class,
+]
+```
+
+Then run the following in your command line
+
+```
+php artisan vendor:publish --provider="Quince\kavenegar\Providers\ServiceProvider"
+```
+
+A config file named `kavenegar.php` can be found in `config` folder. Configure you api key and default sender number if you want.
+
+### Laravel usage
+
+By using laravel service provider you can automatically bindthe Client in your classes constructor.
+
+```php
+use Quince\kavenegar\Client;
+
+class SmsController extend Controller
+{
+
+    protected $client;
+    
+    public function __construct(Client $client)
+    {
+        $this->client = $client
+    }
+    
+    public function send()
+    {
+        $this->client->send('09123456789', 'سلام جطوری؟');
+    }
+    
+}
+```
+
 ## Methods description
 
 ### Client::send()
