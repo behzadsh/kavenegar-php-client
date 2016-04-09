@@ -374,6 +374,10 @@ class Client
     protected function getSender($overWritingSender)
     {
         if ($overWritingSender !== null) {
+            if ($overWritingSender === 0) {
+                return null;
+            }
+            
             return $overWritingSender;
         }
 
